@@ -6,28 +6,7 @@ import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import stackPageStyles from './stack-page.module.css';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
-
-interface IStack<T> {
-  push: (item: T) => void;
-  pop: () => void;
-  peek: () => T;
-};
-
-export class Stack<T> implements IStack<T> {
-  private container: T[] = [];
-
-  push = (item: T): void => {
-    this.container.push(item);
-  };
-
-  pop = (): void => {
-    this.container.pop();
-  };
-
-  peek = (): T => {
-    return this.container[this.container.length - 1];
-  };
-};
+import { Stack } from "./classes";
 
 type TStackItem = {
   value: string;
@@ -56,7 +35,7 @@ export const StackPage: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
       stackArr[stackArr.length - 1].color = ElementStates.Default;
       setStackArr([...stackArr]);
-    }
+    };
   };
 
   const handleDeleteButton = async () => {
@@ -82,7 +61,7 @@ export const StackPage: React.FC = () => {
       return 'top';
     } else {
       return '';
-    }
+    };
   };
 
   return (
@@ -97,11 +76,11 @@ export const StackPage: React.FC = () => {
               <Button text="Добавить" type='submit' onClick={handleAddButton} disabled={inputValue === ''} />
             </div>
             <div className={stackPageStyles.deleteButton}>
-              <Button text="Удалить" type='submit' onClick={handleDeleteButton} disabled={!stackArr.length}/>
+              <Button text="Удалить" type='submit' onClick={handleDeleteButton} disabled={!stackArr.length} />
             </div>
           </section>
           <div className={stackPageStyles.button}>
-            <Button text="Очистить" type='submit' onClick={handleRemoveAllButton} disabled={!stackArr.length}/>
+            <Button text="Очистить" type='submit' onClick={handleRemoveAllButton} disabled={!stackArr.length} />
           </div>
         </div>
         <ul className={stackPageStyles.circlesBox} >

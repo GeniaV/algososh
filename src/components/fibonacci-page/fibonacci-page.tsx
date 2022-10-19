@@ -5,14 +5,7 @@ import { Button } from "../ui/button/button";
 import fibonacciPageStyles from './fibonacci-page.module.css';
 import { Circle } from "../ui/circle/circle";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-
-const fibIterative = (n: number): number[] => {
-  let arr: number[] = [1, 1];
-  for (let i = 2; i < n + 1; i++) {
-    arr.push(arr[i - 2] + arr[i - 1])
-  }
-  return arr;
-};
+import { getFibonacciNumbers } from "./utils";
 
 export const FibonacciPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>();
@@ -22,7 +15,7 @@ export const FibonacciPage: React.FC = () => {
 
   const showVisualization = async (inputValue: string) => {
     setLoader(true);
-    const arr = fibIterative(Number(inputValue));
+    const arr = getFibonacciNumbers(Number(inputValue));
     for (let i = 0; i < arr.length; i++) {
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
       setArrItemFibonacci(arr.slice(0, i + 1));
