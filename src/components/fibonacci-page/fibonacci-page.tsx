@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
@@ -39,7 +39,7 @@ export const FibonacciPage: React.FC = () => {
     }
   };
 
-  const handleButton = (e: SyntheticEvent) => {
+  const handleButton = () => {
     if (inputValue) showVisualization(inputValue);
   };
 

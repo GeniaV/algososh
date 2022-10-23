@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
@@ -42,8 +42,8 @@ export const StringComponent: React.FC = () => {
         await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
       };
 
-      swap(arr, i, j); 
-      
+      swap(arr, i, j);
+
       arr[i].color = ElementStates.Modified;
       arr[j].color = ElementStates.Modified;
 
@@ -52,7 +52,7 @@ export const StringComponent: React.FC = () => {
     setLoader(false);
   };
 
-  const handleButton = (e: SyntheticEvent) => {
+  const handleButton = () => {
     const newArr = inputValue.split('').map((value => ({ value, color: ElementStates.Default })));
     reverse(newArr);
   };
@@ -68,7 +68,7 @@ export const StringComponent: React.FC = () => {
             onChange={onChange}
           />
           <div className={stringStyles.button}>
-            <Button text="Развернуть" onClick={handleButton} type='submit' isLoader={loader} disabled={inputValue === ''} />
+            <Button text="Развернуть" onClick={handleButton} isLoader={loader} disabled={inputValue === ''} />
           </div>
         </div>
         <ul className={stringStyles.circlesBox}>

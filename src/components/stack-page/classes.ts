@@ -4,6 +4,7 @@ interface IStack<T> {
   peek: () => T;
   clear: () => void;
   getSize: () => number;
+  getElements: () => T[]
 };
 
 export class Stack<T> implements IStack<T> {
@@ -26,5 +27,7 @@ export class Stack<T> implements IStack<T> {
   };
 
   getSize = () => this.container.length;
+
+  getElements = () => this.container;
 };
 

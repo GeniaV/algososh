@@ -180,7 +180,6 @@ export const SortingPage: React.FC = () => {
               <div className={sortingPageStyles.button}>
                 <Button
                   text='По возрастанию'
-                  type='submit'
                   sorting={Direction.Ascending}
                   onClick={() => handleClick(Direction.Ascending)}
                   isLoader={setLoading(Direction.Ascending)}
@@ -190,7 +189,6 @@ export const SortingPage: React.FC = () => {
               <div className={sortingPageStyles.button}>
                 <Button
                   text='По убыванию'
-                  type='submit'
                   sorting={Direction.Descending}
                   onClick={() => handleClick(Direction.Descending)}
                   isLoader={setLoading(Direction.Descending)}
@@ -200,7 +198,7 @@ export const SortingPage: React.FC = () => {
             </div>
           </section>
           <div className={sortingPageStyles.button}>
-            <Button text='Новый массив' type='submit' disabled={loader} onClick={makeNewArr} />
+            <Button text='Новый массив' disabled={loader} onClick={makeNewArr} />
           </div>
         </div>
         <ul className={sortingPageStyles.visualContainer}>

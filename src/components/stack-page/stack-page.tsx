@@ -17,7 +17,7 @@ export const StackPage: React.FC = () => {
   const [stackArr, setStackArr] = useState<TStackItem[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
 
-  const stack = new Stack<string>();
+  const [ stack ] = useState(new Stack<TStackItem>());
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -25,35 +25,26 @@ export const StackPage: React.FC = () => {
 
   const handleAddButton = async () => {
     if (inputValue) {
-      stack.push(inputValue);
-
-      stackArr.push({ value: stack.peek(), color: ElementStates.Changing });
-      setInputValue('');
-
-      setStackArr([...stackArr]);
-
+      stack.push({ value: inputValue, color: ElementStates.Changing });
+      setInputValue(''); 
+      setStackArr([...stack.getElements()]);
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
-      stackArr[stackArr.length - 1].color = ElementStates.Default;
-      setStackArr([...stackArr]);
+      stack.peek().color = ElementStates.Default;
+      setStackArr([...stack.getElements()]);      
     };
   };
 
   const handleDeleteButton = async () => {
-    if (stackArr.length === 1) {
-      setStackArr([]);
-    };
-
-    if (stackArr) {
-      stackArr[stackArr.length - 1].color = ElementStates.Changing;
-      setStackArr([...stackArr]);
-      await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
-      stackArr.pop();
-      setStackArr([...stackArr]);
-    };
+    stack.peek().color = ElementStates.Changing;
+    setStackArr([...stack.getElements()]);
+    await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    stack.pop();
+    setStackArr([...stack.getElements()]);
   };
 
   const handleRemoveAllButton = () => {
-    setStackArr([]);
+    stack.clear()
+    setStackArr([...stack.getElements()]);
   };
 
   const givePosition = (index: number, arr: TStackItem[]): string => {
@@ -73,14 +64,14 @@ export const StackPage: React.FC = () => {
               <Input maxLength={4} isLimitText={true} type="text" value={inputValue} onChange={onChange} />
             </div>
             <div className={stackPageStyles.addButton}>
-              <Button text="Добавить" type='submit' onClick={handleAddButton} disabled={inputValue === ''} />
+              <Button text="Добавить" onClick={handleAddButton} disabled={inputValue === ''} />
             </div>
             <div className={stackPageStyles.deleteButton}>
-              <Button text="Удалить" type='submit' onClick={handleDeleteButton} disabled={!stackArr.length} />
+              <Button text="Удалить" onClick={handleDeleteButton} disabled={!stackArr.length} />
             </div>
           </section>
           <div className={stackPageStyles.button}>
-            <Button text="Очистить" type='submit' onClick={handleRemoveAllButton} disabled={!stackArr.length} />
+            <Button text="Очистить" onClick={handleRemoveAllButton} disabled={!stackArr.length} />
           </div>
         </div>
         <ul className={stackPageStyles.circlesBox} >
