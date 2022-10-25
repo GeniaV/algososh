@@ -67,15 +67,15 @@ export const QueuePage: React.FC = () => {
             <div className={queuePageStyles.input}>
               <Input maxLength={4} isLimitText={true} type="text" onChange={onChange} value={inputValue} />
             </div>
-            <div className={queuePageStyles.addButton} onClick={handeAddButton}>
-              <Button text="Добавить" disabled={inputValue === ''} />
+            <div className={queuePageStyles.addButton} >
+              <Button text="Добавить" disabled={inputValue === ''} onClick={handeAddButton}/>
             </div>
-            <div className={queuePageStyles.deleteButton} onClick={handeDeleteButton}>
-              <Button text="Удалить" disabled={queue.isEmpty()} />
+            <div className={queuePageStyles.deleteButton} >
+              <Button text="Удалить" disabled={queue.isEmpty()} onClick={handeDeleteButton}/>
             </div>
           </section>
-          <div className={queuePageStyles.button} onClick={handleRemoveButton}>
-            <Button text="Очистить" disabled={!queue.getHead() && !queue.getTail()} />
+          <div className={queuePageStyles.button} >
+            <Button text="Очистить" disabled={!queue.getHead() && !queue.getTail()} onClick={handleRemoveButton}/>
           </div>
         </div>
         <ul className={queuePageStyles.circlesBox} >

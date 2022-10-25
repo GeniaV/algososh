@@ -13,7 +13,7 @@ type TArray = {
   color: ElementStates;
 };
 
-const getRandomInt = (minLen: number, maxLen: number) => {
+export const getRandomInt = (minLen: number, maxLen: number) => {
   return Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
 };
 
