@@ -1,3 +1,5 @@
+import { ElementStates } from "../../types/element-states";
+
 export class LinkedListNode<T> {
     value: T
     next: LinkedListNode<T> | null
@@ -9,7 +11,6 @@ export class LinkedListNode<T> {
 
 interface ILinkedList<T> {
     append: (element: T) => void;
-    getlength: () => number;
     toArray: () => T[];
     prepend: (element: T) => void;
     deleteHead: () => void;
@@ -17,6 +18,7 @@ interface ILinkedList<T> {
     addByIndex: (element: T, index: number) => void;
     get: (index: number) => void;
     deleteByIndex: (index: number) => void;
+    getArrWithColor: () => Array<{value: T, color: ElementStates}>;
 };
 
 export class LinkedList<T> implements ILinkedList<T> {
@@ -48,7 +50,6 @@ export class LinkedList<T> implements ILinkedList<T> {
         this.tail.next = newNode;
         this.tail = newNode
         this.length++
-        return this;
     };
 
     prepend(element: T) {
@@ -65,7 +66,6 @@ export class LinkedList<T> implements ILinkedList<T> {
         this.head = newNode;
         this.head.next = currenNode;
         this.length++
-        return this;
     };
 
     deleteHead() {
@@ -82,7 +82,6 @@ export class LinkedList<T> implements ILinkedList<T> {
         const newHead = currentHead.next;
         this.head = newHead;
         this.length--;
-        return this;
     };
 
     deleteTail() {
@@ -93,7 +92,7 @@ export class LinkedList<T> implements ILinkedList<T> {
             this.tail = null;
             this.length = 0;
             return;
-        }
+        };
 
         let current = this.head;
         let newTail = null;
@@ -106,9 +105,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         this.tail = newTail;
         this.tail!.next = null;
         this.length--;
-        return this;
     };
-
 
     get(index: number) {
         if (index < 0 || index >= this.length) return null;
@@ -152,7 +149,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         };
     };
 
-    getlength() {
+    get listLength() {
         return this.length;
     };
 
@@ -166,17 +163,8 @@ export class LinkedList<T> implements ILinkedList<T> {
         };
         return [...res];
     };
+
+    getArrWithColor() {
+        return this.toArray().map(item => ({ value: item, color: ElementStates.Default }));
+    };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-

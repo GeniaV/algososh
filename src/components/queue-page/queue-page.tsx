@@ -7,6 +7,7 @@ import queuePageStyles from './queue-page.module.css'
 import { Queue } from "./classes";
 import { ElementStates } from "../../types/element-states";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { delay } from "../../utils/utils";
 
 type TQueueItem = {
   value?: string;
@@ -14,9 +15,12 @@ type TQueueItem = {
   head?: string;
 };
 
+const emptyQueue = Array.from({ length: 7 }, () => ({ value: '', color: ElementStates.Default }));
+
 export const QueuePage: React.FC = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [queueArr, setQueueArr] = useState<TQueueItem[]>(Array.from({ length: 7 }, () => ({ value: '', color: ElementStates.Default })));
+  const [inputValue, setInputValue] = useState('');
+  const [queueArr, setQueueArr] = useState<TQueueItem[]>(emptyQueue);
+  const [disableButtons, setDisableButtons] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -31,7 +35,7 @@ export const QueuePage: React.FC = () => {
       setQueue(queue);
       queueArr[queue.getTail() - 1] = { value: '', color: ElementStates.Changing };
       setQueueArr([...queueArr]);
-      await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
+      await delay(SHORT_DELAY_IN_MS);
       queueArr[queue.getTail() - 1] = { value: inputValue, color: ElementStates.Changing };
       setQueueArr([...queueArr]);
       queueArr[queue.getTail() - 1] = { value: inputValue, color: ElementStates.Default };
@@ -40,17 +44,19 @@ export const QueuePage: React.FC = () => {
   };
 
   const handeDeleteButton = async () => {
+    setDisableButtons(true);
     queue.dequeue();
     setQueue(queue);
     queueArr[queue.getHead() - 1] = { value: queueArr[queue.getHead() - 1].value, color: ElementStates.Changing };
     setQueueArr([...queueArr]);
-    await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     queueArr[queue.getHead() - 1] = { value: '', color: ElementStates.Default };
     setQueueArr([...queueArr]);
     if (queue.getHead() === 7 && queue.getTail() === 7 && queue.isEmpty()) {
       queueArr[queue.getHead() - 1] = { value: '', color: ElementStates.Default, head: 'head' };
       setQueueArr([...queueArr]);
     };
+    setDisableButtons(false);
   };
 
   const handleRemoveButton = () => {
@@ -68,14 +74,14 @@ export const QueuePage: React.FC = () => {
               <Input maxLength={4} isLimitText={true} type="text" onChange={onChange} value={inputValue} />
             </div>
             <div className={queuePageStyles.addButton} >
-              <Button text="Добавить" disabled={inputValue === ''} onClick={handeAddButton}/>
+              <Button text="Добавить" disabled={inputValue === '' || disableButtons} onClick={handeAddButton}/>
             </div>
             <div className={queuePageStyles.deleteButton} >
-              <Button text="Удалить" disabled={queue.isEmpty()} onClick={handeDeleteButton}/>
+              <Button text="Удалить" disabled={queue.isEmpty() || disableButtons} onClick={handeDeleteButton}/>
             </div>
           </section>
           <div className={queuePageStyles.button} >
-            <Button text="Очистить" disabled={!queue.getHead() && !queue.getTail()} onClick={handleRemoveButton}/>
+            <Button text="Очистить" disabled={(!queue.getHead() && !queue.getTail()) || disableButtons} onClick={handleRemoveButton}/>
           </div>
         </div>
         <ul className={queuePageStyles.circlesBox} >

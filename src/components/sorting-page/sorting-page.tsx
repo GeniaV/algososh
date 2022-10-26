@@ -7,44 +7,33 @@ import { Column } from "../../components/ui/column/column";
 import { ElementStates } from "../../types/element-states";
 import { Direction } from "../../types/direction";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { delay } from "../../utils/utils";
+import { makeRandomArr } from "./sorting-page.utils";
 
 type TArray = {
   value: number;
   color: ElementStates;
 };
 
-export const getRandomInt = (minLen: number, maxLen: number) => {
-  return Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
-};
-
 export const SortingPage: React.FC = () => {
   const [array, setArray] = useState<TArray[]>([]);
-  const [sortName, setSortName] = useState<string>('выбор');
+  const [sortName, setSortName] = useState('выбор');
   const [sorting, setSorting] = useState<Direction>();
-  const [loader, setloader] = useState<boolean>(false);
+  const [loader, setLoader] = useState(false);
 
-  const randomArr = () => {
-    const arr = [];
-    const length = getRandomInt(3, 17);
-    for (let i = 0; i < length; i++) {
-      arr.push({ value: Math.round(Math.random() * 100), color: ElementStates.Default });
-    };
-    setArray([...arr]);
-  };
-
-  const makeNewArr = () => {
-    randomArr();
+  const onNewArrButtonClik = () => {
+    setArray([...makeRandomArr()]);
   };
 
   const selectionSortAscending = async (arr: TArray[]) => {
-    setloader(true);
+    setLoader(true);
     for (let i = 0; i < arr.length - 1; i++) {
       let minInd = i;
       for (let j = i + 1; j < arr.length; j++) {
         arr[i].color = ElementStates.Changing;
         arr[j].color = ElementStates.Changing;
         setArray([...arr]);
-        await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
+        await delay(DELAY_IN_MS);
         if (arr[j].value < arr[minInd].value) {
           minInd = j;
         };
@@ -55,18 +44,18 @@ export const SortingPage: React.FC = () => {
       arr[i].color = ElementStates.Modified;
     }
     arr[arr.length - 1].color = ElementStates.Modified;
-    setloader(false);
+    setLoader(false);
   };
 
   const selectionSortDescending = async (arr: TArray[]) => {
-    setloader(true);
+    setLoader(true);
     for (let i = 0; i < arr.length - 1; i++) {
       let maxInd = i;
       for (let j = i + 1; j < arr.length; j++) {
         arr[i].color = ElementStates.Changing;
         arr[j].color = ElementStates.Changing;
         setArray([...arr]);
-        await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
+        await delay(DELAY_IN_MS);
         if (arr[j].value > arr[maxInd].value) {
           maxInd = j;
         };
@@ -77,17 +66,17 @@ export const SortingPage: React.FC = () => {
       arr[i].color = ElementStates.Modified;
     }
     arr[arr.length - 1].color = ElementStates.Modified;
-    setloader(false);
+    setLoader(false);
   };
 
   const bubbleSortAscending = async (arr: TArray[]) => {
-    setloader(true);
+    setLoader(true);
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         arr[j].color = ElementStates.Changing;
         arr[j + 1].color = ElementStates.Changing;
         setArray([...arr]);
-        await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
+        await delay(DELAY_IN_MS);
         if (arr[j].value > arr[j + 1].value) {
           [arr[j].value, arr[j + 1].value] = [arr[j + 1].value, arr[j].value];
         };
@@ -95,17 +84,17 @@ export const SortingPage: React.FC = () => {
       }
       arr[arr.length - i - 1].color = ElementStates.Modified;
     };
-    setloader(false);
+    setLoader(false);
   };
 
   const bubbleSortDescending = async (arr: TArray[]) => {
-    setloader(true);
+    setLoader(true);
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length - i - 1; j++) {
         arr[j].color = ElementStates.Changing;
         arr[j + 1].color = ElementStates.Changing;
         setArray([...arr]);
-        await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
+        await delay(DELAY_IN_MS);
         if (arr[j].value < arr[j + 1].value) {
           [arr[j].value, arr[j + 1].value] = [arr[j + 1].value, arr[j].value];
         };
@@ -113,7 +102,7 @@ export const SortingPage: React.FC = () => {
       }
       arr[arr.length - i - 1].color = ElementStates.Modified;
     };
-    setloader(false);
+    setLoader(false);
   };
 
   const handleClick = (sorting: Direction) => {
@@ -154,7 +143,8 @@ export const SortingPage: React.FC = () => {
   };
 
   useEffect(() => {
-    randomArr();
+    setArray([...makeRandomArr()]);
+    return () => { setArray([])};
   }, []);
 
   return (
@@ -198,7 +188,7 @@ export const SortingPage: React.FC = () => {
             </div>
           </section>
           <div className={sortingPageStyles.button}>
-            <Button text='Новый массив' disabled={loader} onClick={makeNewArr} />
+            <Button text='Новый массив' disabled={loader} onClick={onNewArrButtonClik} />
           </div>
         </div>
         <ul className={sortingPageStyles.visualContainer}>

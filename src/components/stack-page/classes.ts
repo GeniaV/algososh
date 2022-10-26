@@ -1,7 +1,6 @@
 interface IStack<T> {
   push: (item: T) => void;
   pop: () => void;
-  peek: () => T;
   clear: () => void;
   getSize: () => number;
   getElements: () => T[]
@@ -18,7 +17,7 @@ export class Stack<T> implements IStack<T> {
     this.container.pop();
   };
 
-  peek = (): T => {
+  get peek (): T {
     return this.container[this.container.length - 1];
   };
 
@@ -30,4 +29,3 @@ export class Stack<T> implements IStack<T> {
 
   getElements = () => this.container;
 };
-

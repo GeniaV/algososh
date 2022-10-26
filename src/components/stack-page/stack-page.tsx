@@ -7,6 +7,7 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import stackPageStyles from './stack-page.module.css';
 import { SHORT_DELAY_IN_MS } from '../../constants/delays';
 import { Stack } from "./classes";
+import { delay } from "../../utils/utils";
 
 type TStackItem = {
   value: string;
@@ -15,7 +16,7 @@ type TStackItem = {
 
 export const StackPage: React.FC = () => {
   const [stackArr, setStackArr] = useState<TStackItem[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
 
   const [ stack ] = useState(new Stack<TStackItem>());
 
@@ -28,16 +29,16 @@ export const StackPage: React.FC = () => {
       stack.push({ value: inputValue, color: ElementStates.Changing });
       setInputValue(''); 
       setStackArr([...stack.getElements()]);
-      await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
-      stack.peek().color = ElementStates.Default;
+      await delay(SHORT_DELAY_IN_MS);
+      stack.peek.color = ElementStates.Default;
       setStackArr([...stack.getElements()]);      
     };
   };
 
   const handleDeleteButton = async () => {
-    stack.peek().color = ElementStates.Changing;
+    stack.peek.color = ElementStates.Changing;
     setStackArr([...stack.getElements()]);
-    await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
+    await delay(SHORT_DELAY_IN_MS);
     stack.pop();
     setStackArr([...stack.getElements()]);
   };

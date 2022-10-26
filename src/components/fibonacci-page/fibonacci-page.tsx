@@ -5,19 +5,20 @@ import { Button } from "../ui/button/button";
 import fibonacciPageStyles from './fibonacci-page.module.css';
 import { Circle } from "../ui/circle/circle";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
-import { getFibonacciNumbers } from "./utils";
+import { getFibonacciNumbers } from "./fibonacci-page.utils";
+import { delay } from "../../utils/utils";
 
 export const FibonacciPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>();
-  const [loader, setLoader] = useState<boolean>(false);
-  const [buttonDisabled, setbuttonDisabled] = useState<boolean>(true);
+  const [loader, setLoader] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [arrItemFibonacci, setArrItemFibonacci] = useState<Array<number>>();
 
   const showVisualization = async (inputValue: string) => {
     setLoader(true);
     const arr = getFibonacciNumbers(Number(inputValue));
     for (let i = 0; i < arr.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
+      await delay(SHORT_DELAY_IN_MS);
       setArrItemFibonacci(arr.slice(0, i + 1));
     };
     setLoader(false);
@@ -27,14 +28,14 @@ export const FibonacciPage: React.FC = () => {
     const arrFromInput = e.target.value.split('');
 
     if (arrFromInput.length > 2 || Number(arrFromInput[0]) === 0) {
-      setbuttonDisabled(true);
+      setButtonDisabled(true);
     } else if (Number(arrFromInput[0]) >= 2 && arrFromInput.length === 2) {
-      setbuttonDisabled(true);
+      setButtonDisabled(true);
     } else {
       setInputValue(e.target.value);
-      setbuttonDisabled(false);
+      setButtonDisabled(false);
       if (e.target.value === '') {
-        setbuttonDisabled(true);
+        setButtonDisabled(true);
       }
     }
   };

@@ -6,6 +6,7 @@ import stringStyles from './string.module.css';
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS } from "../../constants/delays";
+import { delay } from "../../utils/utils";
 
 export const swap = (arr: TArray[], firstIndex: number, secondIndex: number) => {
   const temp = arr[firstIndex];
@@ -20,9 +21,9 @@ type TArray = {
 };
 
 export const StringComponent: React.FC = () => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
   const [stringArr, setStringArr] = useState<Array<TArray>>([]);
-  const [loader, setLoader] = useState<boolean>(false);
+  const [loader, setLoader] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
@@ -39,7 +40,7 @@ export const StringComponent: React.FC = () => {
         arr[i].color = ElementStates.Changing;
         arr[j].color = ElementStates.Changing;
         setStringArr([...arr]);
-        await new Promise(resolve => setTimeout(resolve, DELAY_IN_MS));
+        await delay(DELAY_IN_MS);
       };
 
       swap(arr, i, j);

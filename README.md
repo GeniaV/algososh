@@ -2,7 +2,7 @@
 
 В проектной работе написан визуализатор алгоритмов. 
 
-[Дизайн проекта](https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link?node-id=0%3A1) подготовлен командой Яндекс.Практикум.
+Дизайн проекта подготовлен командой Яндекс.Практикум.
 
 Из [репозитория](https://github.com/yandex-praktikum/algososh) взята заготовка проекта на React. 
 
