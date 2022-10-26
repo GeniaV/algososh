@@ -127,6 +127,7 @@ export class LinkedList<T> implements ILinkedList<T> {
         if (index === 0) {
             newNode.next = this.head;
             this.head = newNode;
+            this.length++
         };
 
         let prev = this.get(index - 1);
