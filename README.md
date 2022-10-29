@@ -2,6 +2,8 @@
 
 В проектной работе написан визуализатор алгоритмов. Дизайн проекта подготовлен командой Яндекс.Практикум. Из [репозитория](https://github.com/yandex-praktikum/algososh) взята заготовка проекта на React. 
 
+[Ссылка на проект](https://geniav.github.io/algososh/)
+
 **STACK**
 
 JavaScript, CSS, JSX, React, TypeScript.
