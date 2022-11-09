@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
@@ -20,6 +20,28 @@ type TArray = {
   color: ElementStates;
 };
 
+export const reverse = async (arr: TArray[], setStringArr: Dispatch<SetStateAction<TArray[]>>) => {
+  const mid = Math.ceil(arr.length / 2);
+
+  for (let i = 0; i < mid; i++) {
+    let j = arr.length - 1 - i;
+
+    if (i !== j) {
+      arr[i].color = ElementStates.Changing;
+      arr[j].color = ElementStates.Changing;
+      setStringArr([...arr]);
+      await delay(DELAY_IN_MS);
+    };
+
+    swap(arr, i, j);
+
+    arr[i].color = ElementStates.Modified;
+    arr[j].color = ElementStates.Modified;
+
+    setStringArr([...arr]);
+  }
+};
+
 export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [stringArr, setStringArr] = useState<Array<TArray>>([]);
@@ -29,33 +51,11 @@ export const StringComponent: React.FC = () => {
     setInputValue(e.currentTarget.value);
   };
 
-  const reverse = async (arr: TArray[]) => {
-    setLoader(true);
-    const mid = Math.ceil(arr.length / 2);
-
-    for (let i = 0; i < mid; i++) {
-      let j = arr.length - 1 - i;
-
-      if (i !== j) {
-        arr[i].color = ElementStates.Changing;
-        arr[j].color = ElementStates.Changing;
-        setStringArr([...arr]);
-        await delay(DELAY_IN_MS);
-      };
-
-      swap(arr, i, j);
-
-      arr[i].color = ElementStates.Modified;
-      arr[j].color = ElementStates.Modified;
-
-      setStringArr([...arr]);
-    }
-    setLoader(false);
-  };
-
   const handleButton = () => {
     const newArr = inputValue.split('').map((value => ({ value, color: ElementStates.Default })));
-    reverse(newArr);
+    setLoader(true);
+    reverse(newArr, setStringArr);
+    setLoader(false);
   };
 
   return (
