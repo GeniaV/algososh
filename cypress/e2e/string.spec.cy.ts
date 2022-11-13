@@ -28,7 +28,7 @@ describe('string page display correctly', function () {
         cy.get('button').should('not.be.disabled');
         cy.get("button[type='submit']").click();
 
-        cy.get('[data-testid=circle]').each(($el: string, index: number, $list: string[]) => {
+        cy.get('[data-testid=circle]').each(($el, index, $list) => {
             expect($list).to.have.length(stringLength)
             expect($el).to.contain(originalString[index]);
             cy.get($el).should('have.css', 'border-color', firstStepColorsArr[index]);
@@ -36,7 +36,7 @@ describe('string page display correctly', function () {
 
         cy.tick(DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el: string, index: number, $list: string[]) => {
+        cy.get('[data-testid=circle]').each(($el, index, $list) => {
             expect($list).to.have.length(stringLength)
             expect($el).to.contain(inProcessString[index]);
             cy.get($el).should('have.css', 'border-color', secondStepColorsArr[index]);
@@ -44,7 +44,7 @@ describe('string page display correctly', function () {
 
         cy.tick(DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el: string, index: number, $list: string[]) => {
+        cy.get('[data-testid=circle]').each(($el, index, $list) => {
             expect($list).to.have.length(stringLength)
             expect($el).to.contain(finalString[index]);
             cy.get($el).should('have.css', 'border-color', finaStepColorsArr[index]);
