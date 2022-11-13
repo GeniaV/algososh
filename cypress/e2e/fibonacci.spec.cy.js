@@ -19,42 +19,42 @@ describe('fibonacci page display correctly', function () {
         cy.get('button').should('not.be.disabled');
         cy.get("button[type='submit']").click();
 
-        cy.get('[data-testid=circle]').each(($el, index, $list) => {
+        cy.get('[data-testid=circle]').each(($el, index) => {
             expect($el).to.contain(fibonacciArr[index]);
             cy.get($el).should('have.css', 'border-color', color);
         });
 
         cy.wait(SHORT_DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el, index, $list) => {
+        cy.get('[data-testid=circle]').each(($el, index) => {
             expect($el).to.contain(fibonacciArr[index]);
             cy.get($el).should('have.css', 'border-color', color);
         });
 
         cy.wait(SHORT_DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el, index, $list) => {
+        cy.get('[data-testid=circle]').each(($el, index) => {
             expect($el).to.contain(fibonacciArr[index]);
             cy.get($el).should('have.css', 'border-color', color);
         });
 
         cy.wait(SHORT_DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el, index, $list) => {
+        cy.get('[data-testid=circle]').each(($el, index) => {
             expect($el).to.contain(fibonacciArr[index]);
             cy.get($el).should('have.css', 'border-color', color);
         });
 
         cy.wait(SHORT_DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el, index, $list) => {
+        cy.get('[data-testid=circle]').each(($el, index) => {
             expect($el).to.contain(fibonacciArr[index]);
             cy.get($el).should('have.css', 'border-color', color);
         });
 
         cy.wait(SHORT_DELAY_IN_MS);
 
-        cy.get('[data-testid=circle]').each(($el, index, $list) => {
+        cy.get('[data-testid=circle]').each(($el, index) => {
             expect($el).to.contain(fibonacciArr[index]);
             cy.get($el).should('have.css', 'border-color', color);
         });

@@ -22,31 +22,29 @@ describe('string page display correctly', function () {
         const finalString = 'olleh';
         const finaStepColorsArr = ['rgb(127, 224, 81)', 'rgb(127, 224, 81)', 'rgb(127, 224, 81)', 'rgb(127, 224, 81)', 'rgb(127, 224, 81)'];
 
-        cy.clock();
-
         cy.get('input').type(originalString);
         cy.get('button').should('not.be.disabled');
         cy.get("button[type='submit']").click();
 
         cy.get('[data-testid=circle]').each(($el, index, $list) => {
-            expect($list).to.have.length(stringLength)
-            expect($el).to.contain(originalString[index]);
+            cy.get($list).should("have.length", stringLength);
+            cy.get($el).contains(originalString[index]);
             cy.get($el).should('have.css', 'border-color', firstStepColorsArr[index]);
         })
 
-        cy.tick(DELAY_IN_MS);
+        cy.wait(DELAY_IN_MS);
 
         cy.get('[data-testid=circle]').each(($el, index, $list) => {
-            expect($list).to.have.length(stringLength)
-            expect($el).to.contain(inProcessString[index]);
+            cy.get($list).should("have.length", stringLength);
+            cy.get($el).contains(inProcessString[index]);
             cy.get($el).should('have.css', 'border-color', secondStepColorsArr[index]);
         })
 
-        cy.tick(DELAY_IN_MS);
+        cy.wait(DELAY_IN_MS);
 
         cy.get('[data-testid=circle]').each(($el, index, $list) => {
-            expect($list).to.have.length(stringLength)
-            expect($el).to.contain(finalString[index]);
+            cy.get($list).should("have.length", stringLength);
+            cy.get($el).contains(finalString[index])
             cy.get($el).should('have.css', 'border-color', finaStepColorsArr[index]);
         })
     });
