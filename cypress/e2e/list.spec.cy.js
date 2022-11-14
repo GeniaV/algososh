@@ -1,8 +1,28 @@
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
+import {
+  testUrl,
+  testHeadSelector,
+  testTailSelector,
+  testCirleSelector,
+  testAddByIndexButtonSelector,
+  testDeleteByIndexButtonSelector,
+  testAddToHeadButtonSelector,
+  testAddToTailButtonSelector,
+  testCircleContainerSelector,
+  testIndexSelector,
+  testArrowSelector,
+  testInputValueSelector,
+  testTopCircleSelector,
+  testDeletFromTheHeadButtonSelector,
+  testBottomCircleSelector,
+  testDeleteFromTheTailSelector,
+  testIndexValueSelector,
+  testSmallCircleClass,
+} from "../../src/constants/constants";
 
 describe("list page display correctly", function () {
   before(function () {
-    cy.visit("http://localhost:3000/list");
+    cy.visit(`${testUrl}/list`);
   });
 
   const defaultColor = "rgb(0, 50, 255)";
@@ -14,17 +34,17 @@ describe("list page display correctly", function () {
 
   it("should add button and delete by index button disabled if input is empty", function () {
     cy.get("input").should("be.empty");
-    cy.get("[data-testid=addIntoHead]").should("be.disabled");
-    cy.get("[data-testid=addIntoTail]").should("be.disabled");
-    cy.get("[data-testid=addByIndex]").should("be.disabled");
-    cy.get("[data-testid=deleteByIndex]").should("be.disabled");
+    cy.get(testAddToHeadButtonSelector).should("be.disabled");
+    cy.get(testAddToTailButtonSelector).should("be.disabled");
+    cy.get(testAddByIndexButtonSelector).should("be.disabled");
+    cy.get(testDeleteByIndexButtonSelector).should("be.disabled");
   });
 
   it("should default list renders", function () {
     cy.get("#linkedList").find("li");
-    cy.get("[data-testid=circle-cont]").should("have.length", 4);
+    cy.get(testCircleContainerSelector).should("have.length", 4);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
@@ -35,47 +55,47 @@ describe("list page display correctly", function () {
       [][3] = $letter.text();
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
       cy.get($head.eq(3)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
       cy.get($tail.eq(3)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
 
-    cy.get("[data-testid=arrow]").should("have.length", 3);
+    cy.get(testArrowSelector).should("have.length", 3);
   });
 
   it("should add to head works correctly", function () {
-    cy.get("[data-testid=inputValue]").should("be.empty");
-    cy.get("[data-testid=inputValue]").type(value);
+    cy.get(testInputValueSelector).should("be.empty");
+    cy.get(testInputValueSelector).type(value);
 
-    cy.get("[data-testid=addIntoHead]").click();
+    cy.get(testAddToHeadButtonSelector).click();
 
-    cy.get("[data-testid=topCircle]");
+    cy.get(testTopCircleSelector);
 
-    cy.get("[data-testid=topCircle]").contains(value);
-    cy.get("[data-testid=topCircle]")
-      .find("[class*=small]")
+    cy.get(testTopCircleSelector).contains(value);
+    cy.get(testTopCircleSelector)
+      .find(testSmallCircleClass)
       .should("have.css", "border-color", modifiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle-cont]").should("have.length", 5);
+    cy.get(testCircleContainerSelector).should("have.length", 5);
 
-    cy.get("[data-testid=arrow]").should("have.length", 4);
+    cy.get(testArrowSelector).should("have.length", 4);
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", changingColor);
       cy.get($list.eq(1)).should("have.css", "border-color", defaultColor);
       cy.get($list.eq(2)).should("have.css", "border-color", defaultColor);
@@ -85,11 +105,11 @@ describe("list page display correctly", function () {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
@@ -97,7 +117,7 @@ describe("list page display correctly", function () {
       cy.get($head.eq(4)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
@@ -105,31 +125,31 @@ describe("list page display correctly", function () {
       cy.get($tail.eq(4)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
   });
 
   it("should add to tail works correctly", function () {
-    cy.get("[data-testid=inputValue]").should("be.empty");
-    cy.get("[data-testid=inputValue]").type(value);
+    cy.get(testInputValueSelector).should("be.empty");
+    cy.get(testInputValueSelector).type(value);
 
-    cy.get("[data-testid=addIntoTail]").click();
+    cy.get(testAddToTailButtonSelector).click();
 
-    cy.get("[data-testid=topCircle]");
+    cy.get(testTopCircleSelector);
 
-    cy.get("[data-testid=topCircle]").contains(value);
-    cy.get("[data-testid=topCircle]")
-      .find("[class*=small]")
+    cy.get(testTopCircleSelector).contains(value);
+    cy.get(testTopCircleSelector)
+      .find(testSmallCircleClass)
       .should("have.css", "border-color", modifiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle-cont]").should("have.length", 6);
+    cy.get(testCircleContainerSelector).should("have.length", 6);
 
-    cy.get("[data-testid=arrow]").should("have.length", 5);
+    cy.get(testArrowSelector).should("have.length", 5);
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", defaultColor);
       cy.get($list.eq(1)).should("have.css", "border-color", defaultColor);
       cy.get($list.eq(2)).should("have.css", "border-color", defaultColor);
@@ -140,11 +160,11 @@ describe("list page display correctly", function () {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
@@ -153,7 +173,7 @@ describe("list page display correctly", function () {
       cy.get($head.eq(5)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
@@ -162,32 +182,32 @@ describe("list page display correctly", function () {
       cy.get($tail.eq(5)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
   });
 
   it("should delete from the head correctly", function () {
-    cy.get("[data-testid=deleteFromTheHead]").click();
+    cy.get(testDeletFromTheHeadButtonSelector).click();
 
-    cy.get("[data-testid=bottomCircle]");
+    cy.get(testBottomCircleSelector);
 
-    cy.get("[data-testid=bottomCircle]").contains(value);
-    cy.get("[data-testid=bottomCircle]")
-      .find("[class*=circle_small]")
+    cy.get(testBottomCircleSelector).contains(value);
+    cy.get(testBottomCircleSelector)
+      .find(testSmallCircleClass)
       .should("have.css", "border-color", modifiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle-cont]").should("have.length", 5);
+    cy.get(testCircleContainerSelector).should("have.length", 5);
 
-    cy.get("[data-testid=arrow]").should("have.length", 4);
+    cy.get(testArrowSelector).should("have.length", 4);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
@@ -195,7 +215,7 @@ describe("list page display correctly", function () {
       cy.get($head.eq(4)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
@@ -203,82 +223,82 @@ describe("list page display correctly", function () {
       cy.get($tail.eq(4)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
   });
 
   it("should delete from the tail correctly", function () {
-    cy.get("[data-testid=deleteFromTheTail]").click();
+    cy.get(testDeleteFromTheTailSelector).click();
 
-    cy.get("[data-testid=bottomCircle]");
+    cy.get(testBottomCircleSelector);
 
-    cy.get("[data-testid=bottomCircle]").contains(value);
-    cy.get("[data-testid=bottomCircle]")
-      .find("[class*=circle_small]")
+    cy.get(testBottomCircleSelector).contains(value);
+    cy.get(testBottomCircleSelector)
+      .find(testSmallCircleClass)
       .should("have.css", "border-color", modifiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle-cont]").should("have.length", 4);
+    cy.get(testCircleContainerSelector).should("have.length", 4);
 
-    cy.get("[data-testid=arrow]").should("have.length", 3);
+    cy.get(testArrowSelector).should("have.length", 3);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
       cy.get($head.eq(3)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
       cy.get($tail.eq(3)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
   });
 
   it("should add by index correctly", function () {
-    cy.get("[data-testid=inputValue]").should("be.empty");
-    cy.get("[data-testid=inputValue]").type(value);
+    cy.get(testInputValueSelector).should("be.empty");
+    cy.get(testInputValueSelector).type(value);
 
-    cy.get("[data-testid=indexValue]").should("be.empty");
-    cy.get("[data-testid=indexValue]").type(index);
+    cy.get(testIndexValueSelector).should("be.empty");
+    cy.get(testIndexValueSelector).type(index);
 
-    cy.get("[data-testid=addByIndex]").click();
+    cy.get(testAddByIndexButtonSelector).click();
 
-    cy.get("[data-testid=topCircle]");
+    cy.get(testTopCircleSelector);
 
-    cy.get("[data-testid=topCircle]").contains(value);
-    cy.get("[data-testid=topCircle]")
-      .find("[class*=small]")
+    cy.get(testTopCircleSelector).contains(value);
+    cy.get(testTopCircleSelector)
+      .find(testSmallCircleClass)
       .should("have.css", "border-color", modifiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", modifiedColor);
     });
 
     cy.wait(SHORT_DELAY_IN_MS);
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(1)).should("have.css", "border-color", modifiedColor);
     });
 
-    cy.get("[data-testid=circle-cont]").should("have.length", 5);
+    cy.get(testCircleContainerSelector).should("have.length", 5);
 
-    cy.get("[data-testid=arrow]").should("have.length", 4);
+    cy.get(testArrowSelector).should("have.length", 4);
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", defaultColor);
       cy.get($list.eq(1)).should("have.css", "border-color", defaultColor);
       cy.get($list.eq(2)).should("have.css", "border-color", changingColor);
@@ -289,11 +309,11 @@ describe("list page display correctly", function () {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
@@ -301,7 +321,7 @@ describe("list page display correctly", function () {
       cy.get($head.eq(4)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
@@ -309,17 +329,17 @@ describe("list page display correctly", function () {
       cy.get($tail.eq(4)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
   });
 
   it("should delete by index correctly", function () {
-    cy.get("[data-testid=indexValue]").should("be.empty");
-    cy.get("[data-testid=indexValue]").type(index);
-    cy.get("[data-testid=deleteByIndex]").click();
+    cy.get(testIndexValueSelector).should("be.empty");
+    cy.get(testIndexValueSelector).type(index);
+    cy.get(testDeleteByIndexButtonSelector).click();
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", modifiedColor);
       cy.get($list.eq(1)).should("have.css", "border-color", defaultColor);
       cy.get($list.eq(2)).should("have.css", "border-color", defaultColor);
@@ -329,7 +349,7 @@ describe("list page display correctly", function () {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", modifiedColor);
       cy.get($list.eq(1)).should("have.css", "border-color", modifiedColor);
       cy.get($list.eq(2)).should("have.css", "border-color", defaultColor);
@@ -339,7 +359,7 @@ describe("list page display correctly", function () {
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle]").each(($el, index, $list) => {
+    cy.get(testCirleSelector).each(($el, index, $list) => {
       cy.get($list.eq(0)).should("have.css", "border-color", modifiedColor);
       cy.get($list.eq(1)).should("have.css", "border-color", modifiedColor);
       cy.get($list.eq(2)).should("have.css", "border-color", modifiedColor);
@@ -347,38 +367,38 @@ describe("list page display correctly", function () {
       cy.get($list.eq(4)).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=bottomCircle]");
+    cy.get(testBottomCircleSelector);
 
-    cy.get("[data-testid=bottomCircle]").contains(value);
-    cy.get("[data-testid=bottomCircle]")
-      .find("[class*=small]")
+    cy.get(testBottomCircleSelector).contains(value);
+    cy.get(testBottomCircleSelector)
+      .find(testSmallCircleClass)
       .should("have.css", "border-color", modifiedColor);
 
     cy.wait(SHORT_DELAY_IN_MS);
 
-    cy.get("[data-testid=circle-cont]").should("have.length", 4);
+    cy.get(testCircleContainerSelector).should("have.length", 4);
 
-    cy.get("[data-testid=arrow]").should("have.length", 3);
+    cy.get(testArrowSelector).should("have.length", 3);
 
-    cy.get("[data-testid=circle]").each(($el) => {
+    cy.get(testCirleSelector).each(($el) => {
       cy.get($el).should("have.css", "border-color", defaultColor);
     });
 
-    cy.get("[data-testid=head]").within(($head) => {
+    cy.get(testHeadSelector).within(($head) => {
       cy.get($head.eq(0)).should("contain", "head");
       cy.get($head.eq(1)).should("contain", "");
       cy.get($head.eq(2)).should("contain", "");
       cy.get($head.eq(3)).should("contain", "");
     });
 
-    cy.get("[data-testid=tail]").within(($tail) => {
+    cy.get(testTailSelector).within(($tail) => {
       cy.get($tail.eq(0)).should("contain", "");
       cy.get($tail.eq(1)).should("contain", "");
       cy.get($tail.eq(2)).should("contain", "");
       cy.get($tail.eq(3)).should("contain", "tail");
     });
 
-    cy.get("[data-testid=index]").each(($el, index, $list) => {
+    cy.get(testIndexSelector).each(($el, index, $list) => {
       cy.get($el).should("contain", index);
     });
   });
