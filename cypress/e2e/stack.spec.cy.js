@@ -176,3 +176,4 @@ describe('stack page display correctly', function () {
         cy.get('[data-testid=circle-cont]').should('have.length', 0)
     });
 });
+

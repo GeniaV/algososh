@@ -38,7 +38,7 @@ export const ListPage: React.FC = () => {
   const [inputValueInd, setInputValueInd] = useState<number>();
   const [buttonName, setButtonName] = useState('');
   const [circleTempValue, setCircleTempValue] = useState('');
-  
+
   const list = useMemo(() => new LinkedList<string>(Array.from({ length: 4 }, () => (getRandomInt(0, 99).toString()))), []);
 
   const [arr, setArr] = useState<TItem[]>(list.getArrWithColor());
@@ -221,35 +221,39 @@ export const ListPage: React.FC = () => {
               isLimitText={true}
               value={inputValue}
               onChange={onInputChange}
-              disabled={loading} />
+              disabled={loading} 
+              data-testid='inputValue'/>
             <div className={listPageStyles.button}>
               <Button
                 text="Добавить в head"
                 onClick={addIntoHead}
                 isLoader={buttonName === ButtonName.AddToHead && loading}
                 disabled={inputValue === '' || loading ? true : false}
-              />
+                data-testid='addIntoHead' />
             </div>
             <div className={listPageStyles.button}>
               <Button
                 text="Добавить в tail"
                 onClick={addIntoTail}
                 isLoader={buttonName === ButtonName.AddToTail && loading}
-                disabled={inputValue === '' || loading ? true : false} />
+                disabled={inputValue === '' || loading ? true : false}
+                data-testid='addIntoTail' />
             </div>
             <div className={listPageStyles.button}  >
               <Button
                 text="Удалить из head"
                 onClick={deleteFromTheHead}
                 isLoader={buttonName === ButtonName.DeleteFromTheHead && loading}
-                disabled={loading} />
+                disabled={loading}
+                data-testid='deleteFromTheHead' />
             </div>
             <div className={listPageStyles.button}>
               <Button
                 text="Удалить из tail"
                 onClick={deleteFromTheTail}
                 isLoader={buttonName === ButtonName.DeleteFromTheTail && loading}
-                disabled={loading} />
+                disabled={loading}
+                data-testid='deleteFromTheTail' />
             </div>
           </section>
           <section className={listPageStyles.section}>
@@ -262,6 +266,7 @@ export const ListPage: React.FC = () => {
                 value={ind}
                 onChange={onIndChange}
                 disabled={loading}
+                data-testid='indexValue'
               />
             </div>
             <Button
@@ -269,24 +274,26 @@ export const ListPage: React.FC = () => {
               onClick={addByIndex}
               isLoader={buttonName === ButtonName.AddByIndex && loading}
               disabled={!inputValue || !ind || loading ? true : false}
+              data-testid='addByIndex'
             />
             <Button
               text="Удалить по индексу"
               onClick={deleteByIndex}
               isLoader={buttonName === ButtonName.DeleteByIndex && loading}
               disabled={ind === '' || loading ? true : false}
+              data-testid='deleteByIndex'
             />
           </section>
         </div>
-        <ul className={listPageStyles.circlesBox}>
+        <ul className={listPageStyles.circlesBox} id='linkedList'>
           {arr.map((item, index) =>
             <li className={listPageStyles.circleCont} key={index}>
               {loading === true && (addToHeadOperation === true || addToTailOperation === true || addByIndexOperation === true) && index === inputValueInd &&
-                <div className={listPageStyles.smallCircleTop}>
+                <div className={listPageStyles.smallCircleTop} data-testid='topCircle'>
                   <Circle isSmall letter={inputValue} state={ElementStates.Changing} />
                 </div>}
               {loading === true && (deleteFromTheHeadOperation === true || deleteFromTheTailOperation === true || deleteByIndexOperation === true) && index === inputValueInd &&
-                <div className={listPageStyles.smallCircleBottom}>
+                <div className={listPageStyles.smallCircleBottom} data-testid='bottomCircle'>
                   <Circle isSmall letter={circleTempValue} state={ElementStates.Changing} />
                 </div>}
               {arr.length - 1 !== index &&
