@@ -31,7 +31,7 @@ export const StackPage: React.FC = () => {
       setStackArr([...stack.getElements()]);
       await delay(SHORT_DELAY_IN_MS);
       stack.peek.color = ElementStates.Default;
-      setStackArr([...stack.getElements()]);      
+      setStackArr([...stack.getElements()]);     
     };
   };
 
@@ -65,14 +65,14 @@ export const StackPage: React.FC = () => {
               <Input maxLength={4} isLimitText={true} type="text" value={inputValue} onChange={onChange} />
             </div>
             <div className={stackPageStyles.addButton}>
-              <Button text="Добавить" onClick={handleAddButton} disabled={inputValue === ''} />
+              <Button text="Добавить" data-testid='addBtn' onClick={handleAddButton} disabled={inputValue === ''} />
             </div>
             <div className={stackPageStyles.deleteButton}>
-              <Button text="Удалить" onClick={handleDeleteButton} disabled={!stackArr.length} />
+              <Button text="Удалить" data-testid='deleteBtn' onClick={handleDeleteButton} disabled={!stackArr.length} />
             </div>
           </section>
           <div className={stackPageStyles.button}>
-            <Button text="Очистить" onClick={handleRemoveAllButton} disabled={!stackArr.length} />
+            <Button text="Очистить" data-testid='removeBtn' onClick={handleRemoveAllButton} disabled={!stackArr.length} />
           </div>
         </div>
         <ul className={stackPageStyles.circlesBox} >

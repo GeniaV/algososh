@@ -55,7 +55,7 @@ export const FibonacciPage: React.FC = () => {
             <Input max={19} isLimitText={true} type="number" min={1} onChange={onChange} />
           </div>
           <div className={fibonacciPageStyles.button}>
-            <Button text="Рассчитать" onClick={handleButton} disabled={buttonDisabled} isLoader={loader} />
+            <Button text="Рассчитать" type='submit' onClick={handleButton} disabled={buttonDisabled} isLoader={loader} />
           </div>
         </div>
         {arrItemFibonacci?.length &&

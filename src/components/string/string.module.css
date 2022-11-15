@@ -28,5 +28,6 @@
 
 .button {
     display: flex;
-    width: 133px;
+    width: 133px; 
+    min-width: 133px;
 }
